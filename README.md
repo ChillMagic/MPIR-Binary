@@ -11,13 +11,13 @@ See [README.MPIR](./README.MPIR)
 ### Dynamic Link:
 
 1. Import 'dll/XX/XX/mpir.lib'
-2. Import 'lib/XX/XX/mpirxx.lib' (if use "gmpxx.h" or "mpirxx.h").
+2. Import 'lib/XX/XX/XX/mpirxx.lib' (if use "gmpxx.h" or "mpirxx.h").
 3. Use 'mpir.dll' while running.
 
 ### Static Link:
 
-1. Import 'lib/XX/XX/mpir.lib'
-2. Import 'lib/XX/XX/mpirxx.lib' (if use "gmpxx.h" or "mpirxx.h").
+1. Import 'lib/XX/XX/XX/mpir.lib'
+2. Import 'lib/XX/XX/XX/mpirxx.lib' (if use "gmpxx.h" or "mpirxx.h").
 
 ## The way to configure
 
@@ -42,6 +42,8 @@ call msbuild cxx LIB x64 Release
 
 note:
 
-1. This Binary configure 'lib_mpir_cxx' to /MD (Release) and /MDd (Debug) Linker.
+1. This Binary include mpirxx with /MT & /MD in 'lib'.
 
 2. There is a bug in yasm 1.3.0, use old version or rebuid it from newest in GitHub.
+
+3. Configure in VS, you can use variables to import .lib file, like this : `MPIR-Binary\lib\MD\$(Platform)\$(Configuration)\mpir.lib`.
