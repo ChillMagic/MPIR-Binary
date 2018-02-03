@@ -1607,8 +1607,8 @@ public:
   __gmp_expr(unsigned long int l) { mpz_init_set_ui(mp, l); }
 
 #ifdef MPIRXX_HAVE_LLONG
-  __gmp_expr(signed long long int l) { mpz_init_set_si(mp, l); }
-  __gmp_expr(unsigned long long int  l) { mpz_init_set_ui(mp, l); }
+  __gmp_expr(signed long long int l) { mpz_init_set_si(mp, static_cast<mpir_si>(l)); }
+  __gmp_expr(unsigned long long int  l) { mpz_init_set_ui(mp, static_cast<mpir_ui>(l)); }
 #endif
 
 #ifdef MPIRXX_INTMAX_T
@@ -1674,8 +1674,8 @@ __gmp_expr & operator=(unsigned int i) { mpz_set_ui(mp, i); return *this; }
   { mpz_set_ui(mp, l); return *this; }
 
 #ifdef MPIRXX_HAVE_LLONG
-  __gmp_expr & operator=(signed long long int i) { mpz_set_si(mp, i); return *this; }
-  __gmp_expr & operator=(unsigned long long int i) { mpz_set_ui(mp, i); return *this; }
+  __gmp_expr & operator=(signed long long int i) { mpz_set_si(mp, static_cast<mpir_si>(i)); return *this; }
+  __gmp_expr & operator=(unsigned long long int i) { mpz_set_ui(mp, static_cast<mpir_ui>(i)); return *this; }
 #endif
 
 #ifdef MPIRXX_INTMAX_T
@@ -1819,8 +1819,8 @@ public:
   __gmp_expr(unsigned long int l) { mpq_init(mp); mpq_set_ui(mp, l, 1); }
 
 #ifdef MPIRXX_HAVE_LLONG
-  __gmp_expr(signed long long int l) { mpq_init(mp); mpq_set_si(mp, l, 1); }
-  __gmp_expr(unsigned long long int l) { mpq_init(mp); mpq_set_ui(mp, l, 1); }
+  __gmp_expr(signed long long int l) { mpq_init(mp); mpq_set_si(mp, static_cast<mpir_si>(l), 1); }
+  __gmp_expr(unsigned long long int l) { mpq_init(mp); mpq_set_ui(mp, static_cast<mpir_ui>(l), 1); }
 #endif
 
   __gmp_expr(float f) { mpq_init(mp); mpq_set_d(mp, f); }
@@ -1902,9 +1902,9 @@ public:
 
 #ifdef MPIRXX_HAVE_LLONG
   __gmp_expr & operator=(signed long long int l)
-  { mpq_set_si(mp, l, 1); return *this; }
+  { mpq_set_si(mp, static_cast<mpir_si>(l), 1); return *this; }
   __gmp_expr & operator=(unsigned long long int l)
-  { mpq_set_ui(mp, l, 1); return *this; }
+  { mpq_set_ui(mp, static_cast<mpir_ui>(l), 1); return *this; }
 #endif
 
   __gmp_expr & operator=(float f) { mpq_set_d(mp, f); return *this; }
@@ -2042,12 +2042,12 @@ public:
   __gmp_expr(unsigned long int l, mp_bitcnt_t prec)
   { mpf_init2(mp, prec); mpf_set_ui(mp, l); }
 #ifdef MPIRXX_HAVE_LLONG
-  __gmp_expr(signed long long int s) { mpf_init_set_si(mp, s); }
+  __gmp_expr(signed long long int s) { mpf_init_set_si(mp, static_cast<mpir_si>(s)); }
   __gmp_expr(signed long long int s, mp_bitcnt_t prec)
-  { mpf_init2(mp, prec); mpf_set_si(mp, s); }
-  __gmp_expr(unsigned long long int s) { mpf_init_set_ui(mp, s); }
+  { mpf_init2(mp, prec); mpf_set_si(mp, static_cast<mpir_si>(s)); }
+  __gmp_expr(unsigned long long int s) { mpf_init_set_ui(mp, static_cast<mpir_ui>(s)); }
   __gmp_expr(unsigned long long int s, mp_bitcnt_t prec)
-  { mpf_init2(mp, prec); mpf_set_ui(mp, s); }
+  { mpf_init2(mp, prec); mpf_set_ui(mp, static_cast<mpir_ui>(s)); }
 #endif
 
   __gmp_expr(float f) { mpf_init_set_d(mp, f); }
@@ -2133,9 +2133,9 @@ public:
 
 #ifdef MPIRXX_HAVE_LLONG
   __gmp_expr & operator=(signed long long int l)
-  { mpf_set_si(mp, l); return *this; }
+  { mpf_set_si(mp, static_cast<mpir_si>(l)); return *this; }
   __gmp_expr & operator=(unsigned long long int l)
-  { mpf_set_ui(mp, l); return *this; }
+  { mpf_set_ui(mp, static_cast<mpir_ui>(l)); return *this; }
 #endif
 
   __gmp_expr & operator=(float f) { mpf_set_d(mp, f); return *this; }
@@ -3184,7 +3184,7 @@ inline type##_class & type##_class::fun(const __gmp_expr<T, U> &expr)        \
 inline type##_class & type##_class::fun(type2 t)                 \
 {                                                                \
   __gmp_set_expr(mp, __gmp_expr<type##_t, __gmp_binary_expr      \
-		 <type##_class, bigtype, eval_fun> >(*this, t)); \
+		 <type##_class, bigtype, eval_fun> >(*this, static_cast<bigtype>(t))); \
   return *this;                                                  \
 }
 
