@@ -1,6 +1,6 @@
 # MPIR Binary on Windows
 
-This project include MPIR 3.0.0 `win32|x64` `Debug|Release` `LIB|DLL` binary which is built by Visual C++ 15.
+This project include MPIR 3.0.0 `win32|x64` `Debug|Release` `LIB|DLL` `MT|MD` binary which is built by Visual C++ 15.
 
 ## License
 
@@ -42,7 +42,7 @@ call msbuild cxx LIB x64 Release
 
 note:
 
-1. This Binary include mpirxx with /MT & /MD in 'lib'.
+1. This Binary include `/MT` & `/MD` in 'lib'.
 
 2. There is a bug in yasm 1.3.0, use old version or rebuid it from newest in GitHub.
 
